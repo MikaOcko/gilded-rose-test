@@ -2,12 +2,6 @@ import { Item, GildedRose } from '@/gilded-rose';
 import { it, describe } from 'vitest';
 
 describe('Gilded Rose', () => {
-	it('should foo', () => {
-		const gildedRose = new GildedRose([new Item('foo', 0, 0)]);
-		const items = gildedRose.updateQuality();
-		expect(items[0].name).toBe('fixme');
-	});
-
 	it("Un produit perd en qualité à la fin de chaque jour", () => {
 
 		const gildedRose = new GildedRose([new Item('Love potion', 5, 5)]);
