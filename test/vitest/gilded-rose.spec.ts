@@ -40,4 +40,12 @@ describe('Gilded Rose', () => {
 
 		expect(items[0].sellIn).toEqual(1);
 	});
+
+	it("Un produit périmé perd plus vite en qualité", () => {
+		const gildedRose = new GildedRose([new Item('Love potion', -2, 50)]);
+		const items = gildedRose.updateQuality();
+
+		expect(items[0].sellIn).toBeLessThan(-2);
+		expect(items[0].quality).toBeLessThan(50);
+	})
 });
