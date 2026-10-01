@@ -47,5 +47,19 @@ describe('Gilded Rose', () => {
 
 		expect(items[0].sellIn).toBeLessThan(-2);
 		expect(items[0].quality).toBeLessThan(50);
-	})
+	});
+
+	it("la qualité d'un produit normal ne peut pas être négative", () => {
+		const gildedRose = new GildedRose([new Item('Love potion', 100, 5)]);
+		const items = gildedRose.updateQuality();
+
+		expect(items[0].quality).toBeGreaterThanOrEqual(0);
+	});
+
+		it("la qualité d'un produit périmé ne peut pas être négative", () => {
+		const gildedRose = new GildedRose([new Item('Love potion', -2 , 5)]);
+		const items = gildedRose.updateQuality();
+
+		expect(items[0].quality).toBeGreaterThanOrEqual(0);
+	});
 });
