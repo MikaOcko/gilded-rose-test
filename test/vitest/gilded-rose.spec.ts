@@ -69,4 +69,11 @@ describe('Gilded Rose', () => {
 
 		expect(items[0].quality).toEqual(51);
 	});
+
+	it("la qualité d'un produit Aged Brie augmente avec le temps", () => {
+		const gildedRose = new GildedRose([new Item('Aged Brie', 100 , 1)]);
+		const items = gildedRose.updateQuality();
+
+		expect(items[0].quality).toBeGreaterThan(1);
+	});
 });
