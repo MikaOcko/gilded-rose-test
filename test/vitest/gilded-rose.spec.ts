@@ -76,4 +76,29 @@ describe('Gilded Rose', () => {
 
 		expect(items[0].quality).toBeGreaterThan(1);
 	});
+
+	it("la qualité d'un produit Aged Brie ne dépassera pas 50", () => {
+		const gildedRose = new GildedRose([new Item('Aged Brie', 100 , 1)]);
+		const items = gildedRose.updateQuality();
+
+		expect(items[0].quality).toBeLessThanOrEqual(50);
+	});
+
+	it("la qualité d'un produit Backstage augmente de 3pts si la date de péremption est dans moins de 5 jours", () =>{
+		const gildedRose = new GildedRose([new Item('Backstage passes to a TAFKAL80ETC concert', 3 , 1)]);
+		const items = gildedRose.updateQuality();
+		
+		expect(items[0].quality).toBeGreaterThan(1);
+		expect(items[0].quality).toEqual(10);
+	});
+
+	it("la qualité d'un produit Backstage est à zéro après le concert", () =>{
+		const gildedRose = new GildedRose([new Item('Backstage passes to a TAFKAL80ETC concert', 0, 10)]);
+		const items = gildedRose.updateQuality();
+		
+		expect(items[0].quality).toEqual(0);
+	});
+
+
+	// it("", () =>{});
 });
