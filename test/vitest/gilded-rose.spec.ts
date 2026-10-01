@@ -50,10 +50,10 @@ describe('Gilded Rose', () => {
 	});
 
 	it("la qualité d'un produit normal ne peut pas être négative", () => {
-		const gildedRose = new GildedRose([new Item('Love potion', 100, 5)]);
+		const gildedRose = new GildedRose([new Item('Love potion', 0, 0)]);
 		const items = gildedRose.updateQuality();
 
-		expect(items[0].quality).toBeGreaterThanOrEqual(0);
+		expect(items[0].quality).toEqual(0);
 	});
 
 	it("la qualité d'un produit périmé ne peut pas être négative", () => {
@@ -63,11 +63,11 @@ describe('Gilded Rose', () => {
 		expect(items[0].quality).toBeGreaterThanOrEqual(0);
 	});
 
-	it("/!\ la qualité d'un produit normal peut être supérieur à 50", () => {
-		const gildedRose = new GildedRose([new Item('Love potion', 1 , 52)]);
+	it("la qualité d'un produit ne peut être supérieure à 50", () => {
+		const gildedRose = new GildedRose([new Item('Aged Brie', 1 , 50)]);
 		const items = gildedRose.updateQuality();
 
-		expect(items[0].quality).toEqual(51);
+		expect(items[0].quality).toBe(50);
 	});
 
 	it("la qualité d'un produit Aged Brie augmente avec le temps", () => {
@@ -77,19 +77,12 @@ describe('Gilded Rose', () => {
 		expect(items[0].quality).toBeGreaterThan(1);
 	});
 
-	it("la qualité d'un produit Aged Brie ne dépassera pas 50", () => {
-		const gildedRose = new GildedRose([new Item('Aged Brie', 100 , 1)]);
-		const items = gildedRose.updateQuality();
-
-		expect(items[0].quality).toBeLessThanOrEqual(50);
-	});
-
 	it("la qualité d'un produit Backstage augmente de 3pts si la date de péremption est dans moins de 5 jours", () =>{
-		const gildedRose = new GildedRose([new Item('Backstage passes to a TAFKAL80ETC concert', 3 , 1)]);
+		const gildedRose = new GildedRose([new Item('Backstage passes to a TAFKAL80ETC concert', 1 , 1)]);
 		const items = gildedRose.updateQuality();
 		
 		expect(items[0].quality).toBeGreaterThan(1);
-		expect(items[0].quality).toEqual(10);
+		expect(items[0].quality).toEqual(4);
 	});
 
 	it("la qualité d'un produit Backstage est à zéro après le concert", () =>{
@@ -98,7 +91,6 @@ describe('Gilded Rose', () => {
 		
 		expect(items[0].quality).toEqual(0);
 	});
-
 
 	// it("", () =>{});
 });
