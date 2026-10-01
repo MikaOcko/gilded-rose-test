@@ -45,6 +45,12 @@ export class GildedRose {
 		const minQuality:number = 0;
 		const dateExceeded:number = 0;
 
+		enum AOP {
+			Sulfuras = "Sulfuras, Hand of Ragnaros",
+			AgedBrie = "Aged Brie",
+			BackstagePass = "Backstage passes to a TAFKAL80ETC concert",
+		}
+
 		for (const item of this.items) {
 
 			if (
@@ -60,18 +66,19 @@ export class GildedRose {
 			} else {
 				// Si qualité inférieure à qualité maximum
 				if (item.quality < maxQuality) {
-
+					// Augmenter la qualité
 					this.increaseQuality(item);
 
-					if (
-						item.name == "Backstage passes to a TAFKAL80ETC concert"
-					) {
+					// Si item = Concert pass
+					if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
+						// Si date de péremption < 11
 						if (item.sellIn < 11) {
-							// 
+							// Si qualité inférieure à qualité maximum
 							if (item.quality < maxQuality) {
 								this.increaseQuality(item);
 							}
 						}
+						// Si date de péremption < 6
 						if (item.sellIn < 6) {
 							if (item.quality < maxQuality) {
 								this.increaseQuality(item);
@@ -80,19 +87,21 @@ export class GildedRose {
 					}
 				}
 			}
-			// Si le produit n'est pas de type "Sulfuras", reduire la date avant péremption
+			// Si item ≠ Sulfuras, reduire la date avant péremption
 			if (item.name != "Sulfuras, Hand of Ragnaros") {
 				this.reduceSellIn(item);
 			}
 			// Si la date de péremption est dépassée
 			if (item.sellIn < dateExceeded) {
+				// Si item ≠ Vieux fromage
 				if (item.name != "Aged Brie") {
-					if (
-						item.name != "Backstage passes to a TAFKAL80ETC concert"
-					) {
+					// Si item ≠ Concert pass
+					if (item.name != "Backstage passes to a TAFKAL80ETC concert") {
 						// Si qualité supérieure à qualité minimum
 						if (item.quality > minQuality) {
+							// Si item ≠ Sulfuras
 							if (item.name != "Sulfuras, Hand of Ragnaros") {
+								// Baisse de la qualité
 								this.reduceQuality(item);
 							}
 						}
@@ -103,6 +112,7 @@ export class GildedRose {
 				} else {
 					// Si qualité inférieur à qualité maximum
 					if (item.quality < maxQuality) {
+						// Augmentation de la qualité
 						this.increaseQuality(item);
 					}
 				}
