@@ -56,10 +56,17 @@ describe('Gilded Rose', () => {
 		expect(items[0].quality).toBeGreaterThanOrEqual(0);
 	});
 
-		it("la qualité d'un produit périmé ne peut pas être négative", () => {
+	it("la qualité d'un produit périmé ne peut pas être négative", () => {
 		const gildedRose = new GildedRose([new Item('Love potion', -2 , 5)]);
 		const items = gildedRose.updateQuality();
 
 		expect(items[0].quality).toBeGreaterThanOrEqual(0);
+	});
+
+	it("/!\ la qualité d'un produit normal peut être supérieur à 50", () => {
+		const gildedRose = new GildedRose([new Item('Love potion', 1 , 52)]);
+		const items = gildedRose.updateQuality();
+
+		expect(items[0].quality).toEqual(51);
 	});
 });
