@@ -27,16 +27,16 @@ export class GildedRose {
 	}
 
 	// Functions
-	reduceQuality(i:number){
-		this.items[i].quality = this.items[i].quality - 1;
+	reduceQuality(item:Item){
+	 	item.quality = item.quality - 1;
 	}
 
-	increaseQuality(i:number){
-		this.items[i].quality = this.items[i].quality + 1;
+	increaseQuality(item:Item){
+		item.quality = item.quality + 1;
 	}
 
-	reduceSellIn(i:number){
-		this.items[i].sellIn = this.items[i].sellIn - 1;
+	reduceSellIn(item:Item){
+		item.sellIn = item.sellIn - 1;
 	}
 
 	// ----------- TO DO : refacto ----------
@@ -45,65 +45,65 @@ export class GildedRose {
 		const minQuality:number = 0;
 		const dateExceeded:number = 0;
 
-		for (let i = 0; i < this.items.length; i++) {
+		for (const item of this.items) {
 
 			if (
-				this.items[i].name != "Aged Brie" &&
-				this.items[i].name != "Backstage passes to a TAFKAL80ETC concert"
+				item.name != "Aged Brie" &&
+				item.name != "Backstage passes to a TAFKAL80ETC concert"
 			) {
 				// Si qualité inférieure à qualité maximum
-				if (this.items[i].quality > minQuality) {
-					if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
-						this.reduceQuality(i);
+				if (item.quality > minQuality) {
+					if (item.name != "Sulfuras, Hand of Ragnaros") {
+						this.reduceQuality(item);
 					}
 				}
 			} else {
 				// Si qualité inférieure à qualité maximum
-				if (this.items[i].quality < maxQuality) {
+				if (item.quality < maxQuality) {
 
-					this.increaseQuality(i);
+					this.increaseQuality(item);
 
 					if (
-						this.items[i].name == "Backstage passes to a TAFKAL80ETC concert"
+						item.name == "Backstage passes to a TAFKAL80ETC concert"
 					) {
-						if (this.items[i].sellIn < 11) {
+						if (item.sellIn < 11) {
 							// 
-							if (this.items[i].quality < maxQuality) {
-								this.increaseQuality(i);
+							if (item.quality < maxQuality) {
+								this.increaseQuality(item);
 							}
 						}
-						if (this.items[i].sellIn < 6) {
-							if (this.items[i].quality < maxQuality) {
-								this.increaseQuality(i);
+						if (item.sellIn < 6) {
+							if (item.quality < maxQuality) {
+								this.increaseQuality(item);
 							}
 						}
 					}
 				}
 			}
 			// Si le produit n'est pas de type "Sulfuras", reduire la date avant péremption
-			if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
-				this.reduceSellIn(i);
+			if (item.name != "Sulfuras, Hand of Ragnaros") {
+				this.reduceSellIn(item);
 			}
 			// Si la date de péremption est dépassée
-			if (this.items[i].sellIn < dateExceeded) {
-				if (this.items[i].name != "Aged Brie") {
+			if (item.sellIn < dateExceeded) {
+				if (item.name != "Aged Brie") {
 					if (
-						this.items[i].name != "Backstage passes to a TAFKAL80ETC concert"
+						item.name != "Backstage passes to a TAFKAL80ETC concert"
 					) {
 						// Si qualité supérieure à qualité minimum
-						if (this.items[i].quality > minQuality) {
-							if (this.items[i].name != "Sulfuras, Hand of Ragnaros") {
-								this.reduceQuality(i);
+						if (item.quality > minQuality) {
+							if (item.name != "Sulfuras, Hand of Ragnaros") {
+								this.reduceQuality(item);
 							}
 						}
 					} else {
-						this.items[i].quality =
-						this.items[i].quality - this.items[i].quality;
+						item.quality =
+						item.quality - item.quality;
 					}
 				} else {
 					// Si qualité inférieur à qualité maximum
-					if (this.items[i].quality < maxQuality) {
-						this.increaseQuality(i);
+					if (item.quality < maxQuality) {
+						this.increaseQuality(item);
 					}
 				}
 			}
