@@ -10,13 +10,6 @@ export class Item {
 	}
 }
 
-enum AOP {
-	Sulfuras = "Sulfuras",
-	AgedBrie = "Aged Brie",
-	BackstagePass = "Backstage pass",
-
-}
-
 export class GildedRose {
 	// Props
   	items: Array<Item>;
@@ -52,67 +45,44 @@ export class GildedRose {
 		}
 
 		for (const item of this.items) {
-
-			if (
-				item.name != "Aged Brie" &&
-				item.name != "Backstage passes to a TAFKAL80ETC concert"
-			) {
-				// Si qualité inférieure à qualité maximum
-				if (item.quality > minQuality) {
-					if (item.name != "Sulfuras, Hand of Ragnaros") {
-						this.reduceQuality(item);
-					}
+			if (item.name != AOP.AgedBrie && item.name != AOP.BackstagePass) {
+				// ---------- Code Alpha ----------
+				if (item.quality > minQuality && item.name != AOP.Sulfuras) {
+					this.reduceQuality(item);
 				}
 			} else {
-				// Si qualité inférieure à qualité maximum
 				if (item.quality < maxQuality) {
-					// Augmenter la qualité
 					this.increaseQuality(item);
 
-					// Si item = Concert pass
-					if (item.name == "Backstage passes to a TAFKAL80ETC concert") {
-						// Si date de péremption < 11
-						if (item.sellIn < 11) {
-							// Si qualité inférieure à qualité maximum
-							if (item.quality < maxQuality) {
-								this.increaseQuality(item);
-							}
+					if (item.name == AOP.BackstagePass) {
+						if (item.sellIn < 11 && item.quality < maxQuality) {
+							this.increaseQuality(item);
 						}
-						// Si date de péremption < 6
-						if (item.sellIn < 6) {
-							if (item.quality < maxQuality) {
-								this.increaseQuality(item);
-							}
+						if (item.sellIn < 6 && item.quality < maxQuality) {
+							this.increaseQuality(item);
 						}
 					}
 				}
 			}
-			// Si item ≠ Sulfuras, reduire la date avant péremption
-			if (item.name != "Sulfuras, Hand of Ragnaros") {
+
+			if (item.name != AOP.Sulfuras) {
 				this.reduceSellIn(item);
 			}
 			// Si la date de péremption est dépassée
 			if (item.sellIn < dateExceeded) {
-				// Si item ≠ Vieux fromage
-				if (item.name != "Aged Brie") {
-					// Si item ≠ Concert pass
-					if (item.name != "Backstage passes to a TAFKAL80ETC concert") {
-						// Si qualité supérieure à qualité minimum
-						if (item.quality > minQuality) {
-							// Si item ≠ Sulfuras
-							if (item.name != "Sulfuras, Hand of Ragnaros") {
-								// Baisse de la qualité
-								this.reduceQuality(item);
-							}
+
+				if (item.name != AOP.AgedBrie) {
+
+					if (item.name != AOP.BackstagePass) {
+						// ----------- Code Alpha ---------
+						if (item.quality > minQuality && item.name != AOP.Sulfuras) {
+							this.reduceQuality(item);
 						}
 					} else {
-						item.quality =
-						item.quality - item.quality;
+						item.quality = 0;
 					}
 				} else {
-					// Si qualité inférieur à qualité maximum
 					if (item.quality < maxQuality) {
-						// Augmentation de la qualité
 						this.increaseQuality(item);
 					}
 				}
