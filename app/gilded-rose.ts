@@ -55,19 +55,38 @@ export class GildedRose {
 				break;
 			case agedBrie :
 				//augmentation de la qualité +1
+				increaseQuality();
 				// baisse du sellIn -1
+				reudceSellIn();
 				break;
 			case backstagePass :
 				// augmentation de la qualité + 1
+				increaseQuality();
 				// baisse du sellIn -1
 					// si sellIn < 11 : augmentation de la qualité +1
+					if (item.sellIn < 11) {
+						this.increaseQuality(item);
+					}
 					// si sellIn < 6 : augmentation de la qualité +1
+
+						if (item.sellIn < 6) {
+							this.increaseQuality(item);
+						}
 					// si sellIn < 0 : quality =0
+
+					if(item.sellIn <=0){
+						this.item.quality = 0;
+					}
 				break;
 			default :
 				// baisse de la qualité -1
+				reduceQuality();
 				// baisse du sellIn -1
+				reduceSellIn();
 				// après expiration, baisse de la qualité -2
+				if(this.isExpired){
+					reduceSellIn();
+				}
 				break;
 		}
 	
