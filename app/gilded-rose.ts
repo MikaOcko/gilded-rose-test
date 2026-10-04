@@ -32,15 +32,18 @@ export class GildedRose {
 		}
 	}
 
+	// check si la date de péremption est passée
+	private isExpired(item:Item):boolean{
+		return item.sellIn < 0;
+	}
+
 	private reduceSellIn(item:Item):void{
 		item.sellIn -= 1;
 	}
 
 	// ----------- TO DO : refacto ----------
 	updateQuality() {
-		// const maxQuality:number = 50;
-		// const minQuality:number = 0;
-		const dateExceeded:number = 0;
+		// const dateExceeded:number = 0;
 
 		const sulfuras = "Sulfuras, Hand of Ragnaros";
 		const agedBrie = "Aged Brie";
@@ -62,15 +65,14 @@ export class GildedRose {
 						if (item.sellIn < 6) {
 							this.increaseQuality(item);
 						}
-				}
+					}
 			}
 
 			if (item.name !== sulfuras) {
 				this.reduceSellIn(item);
 			}
 			// Si la date de péremption est dépassée
-			if (item.sellIn < dateExceeded) {
-
+			if (this.isExpired(item)) {
 				if (item.name !== agedBrie) {
 
 					if (item.name !== backstagePass) {
@@ -82,8 +84,7 @@ export class GildedRose {
 						item.quality = 0;
 					}
 				} else {
-
-						this.increaseQuality(item);
+					this.increaseQuality(item);
 				}
 			}
 		}
