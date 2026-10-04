@@ -41,10 +41,37 @@ export class GildedRose {
 		item.sellIn -= 1;
 	}
 
+	// ----------- TO DO : refacto ----------
 	private updateItem(item:Item):void {
 		const sulfuras = "Sulfuras, Hand of Ragnaros";
 		const agedBrie = "Aged Brie";
 		const backstagePass = "Backstage passes to a TAFKAL80ETC concert";
+
+			/*
+		switch(item.name){
+			case sulfuras :
+				// pas d'expiration
+				//aucune perte de qualité
+				break;
+			case agedBrie :
+				//augmentation de la qualité +1
+				// baisse du sellIn -1
+				break;
+			case backstagePass :
+				// augmentation de la qualité + 1
+				// baisse du sellIn -1
+					// si sellIn < 11 : augmentation de la qualité +1
+					// si sellIn < 6 : augmentation de la qualité +1
+					// si sellIn < 0 : quality =0
+				break;
+			default :
+				// baisse de la qualité -1
+				// baisse du sellIn -1
+				// après expiration, baisse de la qualité -2
+				break;
+		}
+	
+		*/
 
 		if (item.name !== agedBrie && item.name !== backstagePass) {
 			// ---------- Code Alpha ----------
@@ -83,7 +110,8 @@ export class GildedRose {
 			}
 		}
 	}
-	// ----------- TO DO : refacto ----------
+	
+	
 	public updateQuality():Item[] {
 		for (const item of this.items) {
 			this.updateItem(item);
