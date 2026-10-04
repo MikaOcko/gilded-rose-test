@@ -47,7 +47,7 @@ export class GildedRose {
 		const agedBrie = "Aged Brie";
 		const backstagePass = "Backstage passes to a TAFKAL80ETC concert";
 
-	/*
+	
 		switch(item.name){
 			case sulfuras :
 				// pas d'expiration
@@ -58,6 +58,10 @@ export class GildedRose {
 				this.increaseQuality(item);
 				// baisse du sellIn -1
 				this.reduceSellIn(item);
+				// si expiration : augmenation de la qualité +1
+				if(this.isExpired(item)){
+					this.increaseQuality(item);
+				}
 				break;
 			case backstagePass :
 				// augmentation de la qualité + 1
@@ -72,8 +76,8 @@ export class GildedRose {
 				if (item.sellIn < 6) {
 					this.increaseQuality(item);
 				}
-				// si sellIn < 0 : quality =0
-				if(item.sellIn <=0){
+				// après expirations : quality =0
+				if(this.isExpired(item)){
 					item.quality = 0;
 				}
 
@@ -85,48 +89,47 @@ export class GildedRose {
 				this.reduceSellIn(item);
 				// après expiration, baisse de la qualité -2
 				if(this.isExpired(item)){
-					this.reduceSellIn(item);
+					this.reduceQuality(item);
 				}
 				break;
 		}
-	*/
 
-		if (item.name !== agedBrie && item.name !== backstagePass) {
-			// ---------- Code Alpha ----------
-			if (item.name !== sulfuras) {
-				this.reduceQuality(item);
-			}
-		} else {
-			this.increaseQuality(item);
+		// if (item.name !== agedBrie && item.name !== backstagePass) {
+		// 	// ---------- Code Alpha ----------
+		// 	if (item.name !== sulfuras) {
+		// 		this.reduceQuality(item);
+		// 	}
+		// } else {
+		// 	this.increaseQuality(item);
 
-			if (item.name === backstagePass) {
-				if (item.sellIn < 11) {
-					this.increaseQuality(item);
-				}
-				if (item.sellIn < 6) {
-					this.increaseQuality(item);
-				}
-			}
-		}
+		// 	if (item.name === backstagePass) {
+		// 		if (item.sellIn < 11) {
+		// 			this.increaseQuality(item);
+		// 		}
+		// 		if (item.sellIn < 6) {
+		// 			this.increaseQuality(item);
+		// 		}
+		// 	}
+		// }
 
-		if (item.name !== sulfuras) {
-			this.reduceSellIn(item);
-		}
+		// if (item.name !== sulfuras) {
+		// 	this.reduceSellIn(item);
+		// }
 		
-		if (this.isExpired(item)) {
-			if (item.name !== agedBrie) {
-				if (item.name !== backstagePass) {
-					// ----------- Code Alpha ---------
-					if (item.name !== sulfuras) {
-						this.reduceQuality(item);
-					}
-				} else {
-					item.quality = 0;
-				}
-			} else {
-				this.increaseQuality(item);
-			}
-		}
+		// if (this.isExpired(item)) {
+		// 	if (item.name !== agedBrie) {
+		// 		if (item.name !== backstagePass) {
+		// 			// ----------- Code Alpha ---------
+		// 			if (item.name !== sulfuras) {
+		// 				this.reduceQuality(item);
+		// 			}
+		// 		} else {
+		// 			item.quality = 0;
+		// 		}
+		// 	} else {
+		// 		this.increaseQuality(item);
+		// 	}
+		// }
 	}
 	
 	
