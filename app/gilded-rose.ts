@@ -41,52 +41,52 @@ export class GildedRose {
 		item.sellIn -= 1;
 	}
 
-	// ----------- TO DO : refacto ----------
-	updateQuality() {
-		// const dateExceeded:number = 0;
-
+	private updateItem(item:Item):void {
 		const sulfuras = "Sulfuras, Hand of Ragnaros";
 		const agedBrie = "Aged Brie";
 		const backstagePass = "Backstage passes to a TAFKAL80ETC concert";
 
-		for (const item of this.items) {
-			if (item.name !== agedBrie && item.name !== backstagePass) {
-				// ---------- Code Alpha ----------
-				if (item.name !== sulfuras) {
-					this.reduceQuality(item);
-				}
-			} else {
-					this.increaseQuality(item);
-
-					if (item.name === backstagePass) {
-						if (item.sellIn < 11) {
-							this.increaseQuality(item);
-						}
-						if (item.sellIn < 6) {
-							this.increaseQuality(item);
-						}
-					}
-			}
-
+		if (item.name !== agedBrie && item.name !== backstagePass) {
+			// ---------- Code Alpha ----------
 			if (item.name !== sulfuras) {
-				this.reduceSellIn(item);
+				this.reduceQuality(item);
 			}
-			// Si la date de péremption est dépassée
-			if (this.isExpired(item)) {
-				if (item.name !== agedBrie) {
+		} else {
+			this.increaseQuality(item);
 
-					if (item.name !== backstagePass) {
-						// ----------- Code Alpha ---------
-						if (item.name !== sulfuras) {
-							this.reduceQuality(item);
-						}
-					} else {
-						item.quality = 0;
+			if (item.name === backstagePass) {
+				if (item.sellIn < 11) {
+					this.increaseQuality(item);
+				}
+				if (item.sellIn < 6) {
+					this.increaseQuality(item);
+				}
+			}
+		}
+
+		if (item.name !== sulfuras) {
+			this.reduceSellIn(item);
+		}
+		
+		if (this.isExpired(item)) {
+			if (item.name !== agedBrie) {
+				if (item.name !== backstagePass) {
+					// ----------- Code Alpha ---------
+					if (item.name !== sulfuras) {
+						this.reduceQuality(item);
 					}
 				} else {
-					this.increaseQuality(item);
+					item.quality = 0;
 				}
+			} else {
+				this.increaseQuality(item);
 			}
+		}
+	}
+	// ----------- TO DO : refacto ----------
+	public updateQuality():Item[] {
+		for (const item of this.items) {
+			this.updateItem(item);
 		}
 
 		return this.items;
